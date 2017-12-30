@@ -8,7 +8,7 @@ The Stable Marraige Problem (SMP) is seen as a game where each player wanted to 
 
 Gale and Shapley (GS) devised an algorithm to solve the stable marraige problem. The goal of the GS algorithm is to find a stable matching, which occurs if a matching does not have a blocking pair. A blocking pair is a pair of a man and a woman who prefer each other to their current matching partners. 
 
-There may be more than one stable matching for a given set of men and women based on the proference lists, iee there are men-optimal and women-optimal stable matchings. For the simplicity of this project and given the Gupta, Iwama, Miyazaki algorith, we will focus promarily on a men-proposing algorithm, which given the GS algirthm find the men-optimal stable matching in linear time. 
+There may be more than one stable matching for a given set of men and women based on the proference lists, iee there are men-optimal and women-optimal stable matchings. For the simplicity of this project and given the Gupta, Iwama, Miyazaki algorithm, we will focus promarily on a men-proposing algorithm, which given the GS algirthm find the men-optimal stable matching in linear time. 
 
 The SMP is much like any other game - each player is inheretly selfish and wants to obtain the best possible partner, even if it means stealing one from the other players. Because of this, there are ways to manipulate the system in order to obtain a better partner. Specifically, given this is a men-proposing algorithm, women may use a list Q in the game which differs from their true preferences P. 
 For this algorithm we will then consider the true preferences P = (P(M), P(W)) and the stated preferences Q = (P(M), Q(W)) where P(W) and P(M) are the sets of true preferences and Q(W) is the set of stated preferences for the women. The goal of the algorithm is to check is Q is Nash Equilibrium. A strategy Q is at Nash Equilibrium with respect to P is no single player can get a better partner by changing his/her list in Q while all others use their respective lists in Q. 
@@ -37,8 +37,30 @@ A strategy Q with respect to the strategy P is totally stables if (a) µQ is P-s
 The main goal of Gupta, Iwama, and Miyazaki's algorithm is to extend the work done in the GS algorithm beyond to a more general setting of when P ≠ Q. This will be examined next. 
 
 ### Gale-Shapley Algorithm (Men-Proposing) 
-The men-proposing Gale-Shapley algorithm (GS-M) would work by doing the following: a man who is not matched proposes to the woman at the top of his list. When a woman w received a proposal from man m, she accepts the proposale if it is her first propposal or if she prefers m to her current partner m'. If w prefers her current partner to m, then she rejects m. If m is rejected, then he will move to the next woman in his list and continue the process. THis happens for every man until there is no man left unmatched. 
+The men-proposing Gale-Shapley algorithm (GS-M) would work by doing the following: a man who is not matched proposes to the woman at the top of his list. When a woman w received a proposal from man m, she accepts the proposale if it is her first propposal or if she prefers m to her current partner m'. If w prefers her current partner to m, then she rejects m. If m is rejected, then he will move to the next woman in his list and continue the process. This happens for every man until there is no man left unmatched. If there are two or more unmatched men, then the man with the smallest index is first to propose making this algorithm is purely-deterministic. 
 
+### Gupta, Iwama, Miyazaki Algorithm
+They have set out to solve to answer the questions, is Q totally stable when there are two inputs: a true strategy P = (P(M), P(W)) and a states stratefy Q = (P(M), Q(W)). 
+
+**Algorithm 1:** A(Q,w) 
+```markdown
+**Input:** Stategy Q = (P(M), (W)) and a woman w 
+**Output:** Sets Nw(Q) = {m ∈ M | ∃	Q' ∈ S (qw) that yields µQo(w) = m}, and Lw(Q) = Q'(m;w) | m ∈ Nw(Q), Q' = (Q(-w), Q'(m;w)) yields µQo(w) = m}
+
+1. Let x1 be the first active man in Q(w) 
+2. Let N ← {x1} and L ← {Q(x1; w)}
+3. **Explore** Q(x1;w)
+4. **return** (N,L)
+
+Procedure **Explore**Q'(x,I;w)
+
+1. Let A ← {men who are active in Q'(x,I;w) after x}
+2. **foreach** y ∈ A \ N **do**
+   N ← N U {y} and L ← L U {Q'(y,x,I;w)}
+   **Explore**(Q'(y,x,I;w)
+```
+
+The above algorithm outputs the set Nw(Q) of all possible partners m of a given fixed woman w with a manipulated stratefy Q' = (Q(-w), Q'(w)), meaning the men-optimal stable matching will match w to m. We can use this algorithm n times (for each man) to obtain Nw1(Q), ..., Nwn(Q). The **Explore** step takes a parameter Q(x, I,; w), where w is a preference list, x is the front of the list, and I is the sublist. **Explore**Q(x,I;w) completes the male-proposing Gale-Shapley algorithm for Q' and creates a set of men A who propose to w after x. 
 
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
