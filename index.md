@@ -22,13 +22,24 @@ The Model for the SMP consists of:
    (b) another based on Nash Equilibrium with respect to P
 ```
 An example of the differences between a true strategy P = (P(M), P(W)) and a stated strategy Q = (P(M), Q(W)): 
-```markdown
 
-```
+Men: | P(M)    |  Women |  P(W)     |   Q(W)    |
+|----| ------- | ------ | --------  |-----------|
+1:   | a b c d |    a:  | 2 3 *1* 4 | *3* 4 1 2 |
+2:   | b a c d |    b:  | 1 *2* 3 4 | *1* 2 3 4 |
+3:   | b c a d |    c:  | 2 *3* 4 1 | *2* 3 4 1 |
+4:   | a d b c |    d:  | *4* 1 2 3 | *4* 1 2 3 |
+
+This example illustrates the difference between the cases when P = Q and when P ≠ Q. As we can see, P and W only differ in the list of a. 
 
 A strategy Q with respect to the strategy P is totally stables if (a) µQ is P-stable, where µQ is the men-optimal stable matching and (b) for any woman, Q' yields no better partner for w in terms of P.
 
-The main goal of Gupta, Iwama, and Miyazaki's algorithm is to extend the work done in the GS algorithm beyond to a more general setting of when P ≠ Q. This will be examined later. 
+The main goal of Gupta, Iwama, and Miyazaki's algorithm is to extend the work done in the GS algorithm beyond to a more general setting of when P ≠ Q. This will be examined next. 
+
+### Gale-Shapley Algorithm (Men-Proposing) 
+The men-proposing Gale-Shapley algorithm (GS-M) would work by doing the following: a man who is not matched proposes to the woman at the top of his list. When a woman w received a proposal from man m, she accepts the proposale if it is her first propposal or if she prefers m to her current partner m'. If w prefers her current partner to m, then she rejects m. If m is rejected, then he will move to the next woman in his list and continue the process. THis happens for every man until there is no man left unmatched. 
+
+
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
